@@ -1,5 +1,3 @@
-rm -rf Deploy_k3s
-rm -rf Terraform
 cd Terraform/ 
 terraform init && terraform apply --auto-approve
 ip_master=$(terraform output -json instance_ips_master | jq -r '.')

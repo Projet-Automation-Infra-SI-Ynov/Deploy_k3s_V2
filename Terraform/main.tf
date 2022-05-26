@@ -15,8 +15,8 @@ provider "proxmox" {
 
 locals {
   vm_names = toset([
-    "k3s_master",
-    "k3s_worker",
+    "k3s-master",
+    "k3s-worker",
   ])
 }
 
@@ -46,9 +46,9 @@ resource "proxmox_vm_qemu" "k3s_cluster" {
 }
 
 output "instance_ips_master" {
-  value = proxmox_vm_qemu.k3s_cluster["k3s_master"].default_ipv4_address
+  value = proxmox_vm_qemu.k3s_cluster["k3s-master"].default_ipv4_address
 }
 
 output "instance_ips_worker" {
-  value = proxmox_vm_qemu.k3s_cluster["k3s_worker"].default_ipv4_address
+  value = proxmox_vm_qemu.k3s_cluster["k3s-worker"].default_ipv4_address
 }
