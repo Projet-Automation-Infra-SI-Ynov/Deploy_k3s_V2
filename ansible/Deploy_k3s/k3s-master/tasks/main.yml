@@ -1,0 +1,33 @@
+---
+- name: Set a hostname
+  ansible.builtin.hostname:
+    name: k3s-master-01
+
+- name: Download k3s repository
+  git:
+    repo: https://github.com/Projet-Automation-Infra-SI-Ynov/Deploy_k3s.git
+    dest: /home/administrateur/k3s
+    version: master
+
+- name: Add Registry IP in daemon.json
+  shell: sed -i 's/IP_REGISTRY/REGISTRY2/g' /home/administrateur/k3s/daemon.json
+
+- name: Copy the Docker daemon file
+  copy:
+    remote_src: yes
+    src: /home/administrateur/k3s/daemon.json
+    dest: /etc/docker/daemon.json
+
+- name: Restart the Docker daemon
+  systemd:
+    name: docker
+    state: restarted
+    masked: no
+  async: 60
+
+- name: Install k3s Master Node
+  shell: curl -sfL https://get.k3s.io/ | sh -s - --docker
+
+- name: Get Master Token 
+  shell: cat /var/lib/rancher/k3s/server/node-token
+  register: Token

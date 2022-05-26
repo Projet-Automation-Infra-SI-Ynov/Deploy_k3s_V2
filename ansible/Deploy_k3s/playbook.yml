@@ -1,0 +1,13 @@
+- hosts: Master
+  become: yes
+  roles:
+    - role: docker
+    - role: git
+    - role: k3s-master
+
+- hosts: Worker
+  become: yes
+  roles:
+    - role: docker
+    - role: git
+    - role: k3s-worker
