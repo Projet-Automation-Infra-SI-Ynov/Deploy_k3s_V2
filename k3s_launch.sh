@@ -1,5 +1,5 @@
 cd Terraform/ 
-apt-get install jq
+sudo apt-get install jq
 terraform init && terraform apply --auto-approve
 ip_master=$(terraform output -json instance_ips_master | jq -r '.')
 ip_worker=$(terraform output -json instance_ips_worker | jq -r '.')
